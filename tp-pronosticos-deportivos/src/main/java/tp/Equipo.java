@@ -12,16 +12,19 @@ public class Equipo {
     private String nombre;
     private String descripcion;
 
-    public Equipo() {
-        
-    }
-
     public Equipo(int idEquipo, String nombre, String descripcion) {
         this.idEquipo = idEquipo;
         this.nombre = nombre;
         this.descripcion = descripcion;
     }
+    
+    public Equipo() {
+    }
 
+    public Equipo(int idEquipo) {
+        this.idEquipo = idEquipo;
+    }
+    
     public int getIdEquipo() {
         return idEquipo;
     }
@@ -49,5 +52,6 @@ public class Equipo {
     @Override
     public String toString() {
         return "Equipo{" + "idEquipo=" + idEquipo + ", nombre=" + nombre + ", descripcion=" + descripcion + '}';
-    }
+    }  
+    
 }

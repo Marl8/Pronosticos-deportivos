@@ -1,7 +1,11 @@
 
 package tp;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 
 /**
  *
@@ -11,14 +15,17 @@ import java.util.ArrayList;
 public class ListaParticipantes {
     
     private ArrayList <Participante> participantes;
-    private String nombreArchivo;
+    private String particpantesCSV;
 
     public ListaParticipantes() {
+        
+        this.participantes = new ArrayList<Participante>();
+        this.particpantesCSV = "particpantes.csv";
     }
 
     public ListaParticipantes(ArrayList<Participante> participantes, String nombreArchivo) {
         this.participantes = participantes;
-        this.nombreArchivo = nombreArchivo;
+        this.particpantesCSV = nombreArchivo;
     }
 
     public ArrayList<Participante> getParticipantes() {
@@ -29,22 +36,82 @@ public class ListaParticipantes {
         this.participantes = participantes;
     }
 
-    public String getNombreArchivo() {
-        return nombreArchivo;
+    public String getParticpantesCSV() {
+        return particpantesCSV;
     }
 
-    public void setNombreArchivo(String nombreArchivo) {
-        this.nombreArchivo = nombreArchivo;
+    public void setParticpantesCSV(String particpantesCSV) {
+        this.particpantesCSV = particpantesCSV;
+    }
+    
+       // add y remove elementos
+    public void addParticpante(Participante parti) {
+        this.participantes.add(parti);
+    }
+    public void removeParticipante(Participante parti) {
+        this.participantes.remove(parti);
     }
 
     @Override
     public String toString() {
-        return "ListaParticipantes{" + "participantes=" + participantes + ", nombreArchivo=" + nombreArchivo + '}';
+        return "ListaParticipantes{" + "participantes=" + participantes + ", participantesCSV=" + particpantesCSV + '}';
     }
     
-    public void cargarDeArchivo () {
+     public String listar() {
+        String lista = "";
+        for (Participante parti: participantes) {
+            lista += "\n" + parti;
+        }           
+        return lista;
     }
     
-    public void clacularPuntaje () {
+     // cargar desde el archivo
+    public void cargarDeArchivo() {
+        // para las lineas del archivo csv
+        String datosParticipantes;
+        // para los datos individuales de cada linea
+        String vectorParticipantes[];
+        // para el objeto en memoria
+        Participante participante;
+        int i = 0;
+        int fila = 0;
+       
+        try { 
+            Scanner sc = new Scanner(new File("./participantes.csv"));
+            sc.useDelimiter("\n");   //setea el separador de los datos
+                
+            while (sc.hasNext()) {
+                // levanta los datos de cada linea
+                datosParticipantes = sc.next();
+                System.out.println(datosParticipantes);  //muestra los datos levantados 
+                fila ++;
+                // si es la cabecera la descarto y no se considera para armar el listado
+                if (fila == 1)
+                    continue;              
+                 
+                //Proceso auxiliar para convertir los string en vector
+                // guarda en un vector los elementos individuales
+                vectorParticipantes = datosParticipantes.split(",");   
+                
+                 
+                if (vectorParticipantes.length > 0 && vectorParticipantes[i] != null
+                        && Integer.parseInt(vectorParticipantes[i]) >= 0) {
+                // graba el equipo en memoria
+                int idparticipante = Integer.parseInt(vectorParticipantes[0]);
+                String nombre = vectorParticipantes[1];
+
+                // crea el objeto en memoria
+                participante = new Participante(idparticipante, nombre);
+                System.out.println(participante);
+                
+                // llama al metodo add para grabar el equipo en la lista en memoria
+                this.addParticpante(participante);
+                }
+            }    
+            //closes the scanner
+        } catch (IOException ex) {
+                System.out.println("Mensaje: " + ex.getMessage());
+        }       
+        i++;
     }
 }

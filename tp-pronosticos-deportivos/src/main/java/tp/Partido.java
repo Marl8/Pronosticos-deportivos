@@ -18,6 +18,10 @@ public class Partido {
         
     }
 
+    public Partido(int idPartido) {
+        this.idPartido = idPartido;
+    }
+    
     public Partido(int idPartido, Equipo equipo1, Equipo equipo2, int golesEquipo1, int golesEquipo2) {
         this.idPartido = idPartido;
         this.equipo1 = equipo1;
@@ -65,21 +69,21 @@ public class Partido {
     public void setGolesEquipo2(int golesEquipo2) {
         this.golesEquipo2 = golesEquipo2;
     }
-    
+
+    @Override
     public String toString() {
-        String res = 
-                "-----------------------------------------\n"+
-                this.idPartido+"\n"+
-                this.equipo1.getNombre()+" vs. "+this.equipo2.getNombre()+"\n"+
-                "Resultado: "+this.golesEquipo1+ " a "+this.golesEquipo2+"\n"+
-                "-----------------------------------------\n";
-        return res;
+        return "Partido{" + "idPartido=" + idPartido + 
+                ", equipo1=" + equipo1.getIdEquipo() + 
+                ", equipo2=" + equipo2.getIdEquipo() + 
+                ", golesEquipo1=" + golesEquipo1 + 
+                ", golesEquipo2=" + golesEquipo2 + '}';
     }
+    
     
     public char getResultado (Equipo equipo) {
         char resultado = ' '; // POR DEFECTO NO SE SABE QUIEN GANO
         
-        if (equipo.getNombre().equals(equipo1.getNombre())) {
+        if (equipo.getIdEquipo() == equipo1.getIdEquipo()) {
             if (this.golesEquipo1 > this.golesEquipo2) {
                 resultado = 'G';
             } else if (this.golesEquipo1 < this.golesEquipo2) {
@@ -87,7 +91,7 @@ public class Partido {
             } else {
                 resultado = 'E';
             }
-        } else if (equipo.getNombre().equals(equipo2.getNombre())) {
+        } else if (equipo.getIdEquipo() == equipo2.getIdEquipo()) {
             if (this.golesEquipo2 > this.golesEquipo1) {
                 resultado = 'G';
             } else if (this.golesEquipo2 < this.golesEquipo1) {

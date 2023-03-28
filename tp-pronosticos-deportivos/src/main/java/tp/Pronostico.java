@@ -9,20 +9,30 @@ package tp;
 public class Pronostico {
     
     private int idPronostico;
+    private Participante participante;
     private Equipo equipo;
     private Partido partido;
-    private char Resultado;
+    private char resultado;
     
     public Pronostico() {
         
     }
 
-    public Pronostico(int idPronostico, Equipo equipo, Partido partido, char Resultado) {
-        this.idPronostico = idPronostico;
+    public Pronostico(Participante participante, Equipo equipo, Partido partido, char resultado) {
+        this.participante = participante;
         this.equipo = equipo;
         this.partido = partido;
-        this.Resultado = Resultado;
+        this.resultado = resultado;
     }
+
+    public Pronostico(int idPronostico, Participante participante, Equipo equipo, Partido partido, char resultado) {
+        this.idPronostico = idPronostico;
+        this.participante = participante;
+        this.equipo = equipo;
+        this.partido = partido;
+        this.resultado = resultado;
+    }
+
 
     public int getIdPronostico() {
         return idPronostico;
@@ -32,7 +42,13 @@ public class Pronostico {
         this.idPronostico = idPronostico;
     }
 
-    
+    public Participante getParticipante() {
+        return participante;
+    }
+
+    public void setParticipante(Participante participante) {
+        this.participante = participante;
+    }
 
     public Equipo getEquipo() {
         return equipo;
@@ -51,24 +67,29 @@ public class Pronostico {
     }
 
     public char getResultado() {
-        return Resultado;
+        return resultado;
     }
 
     public void setResultado(char Resultado) {
-        this.Resultado = Resultado;
+        this.resultado = Resultado;
     }
-    
+
+    @Override
     public String toString() {
-        String res = "\nApuesto a que en el partido:\n"+
-                this.getIdPronostico()+
-                this.getPartido()+
-                this.getEquipo().getNombre()+" obtiene el siguiente Resultado: "+
-                this.getResultado()+"\n";
-        return res;
+        return "Pronostico{" + "participante=" + participante.getIdParticipante()
+                + ", equipo=" + equipo.getIdEquipo() + 
+                ", partido=" + partido.getIdPartido() +
+                ", resultado=" + resultado + '}';
     }
+
     
-    public int puntos () {
+    /*public int puntos () {
      
-        return 0;
-    }
+          int puntos = 0;
+
+        if (partido.getResultado(this.equipo) == this.resultado) {       
+            puntos = 1;
+        }     
+        return puntos;
+    }*/
 }
