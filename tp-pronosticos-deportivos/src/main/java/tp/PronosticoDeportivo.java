@@ -1,13 +1,11 @@
-/*
-Para entrega 2
- */
-package tp;
 
+package tp;
 
 /**
  *
- * @author aguzman
+ * @author Grupo 4
  */
+
 public class PronosticoDeportivo {
     
     private ListaEquipos equipos;
@@ -30,13 +28,14 @@ public class PronosticoDeportivo {
         equipos.cargarDeArchivo();
         
        // cargar y listar los partidos
-        partidos.cargarDeArchivo();
+        partidos.cargarDeArchivo(equipos);
         
-        // cargar y listar los participantes
+        //cargar y listar los participantes
         participantes.cargarDeArchivo();
         
-        // cargar y listar los pronosticos
-        pronosticos.cargarDeArchivo();
+        //cargar y listar los pronosticos
+        pronosticos.cargarDeArchivo(equipos, partidos, 
+                                   participantes);
         
         System.out.println("Los equipos cargados son: " + equipos.listar());
         System.out.println("============================================");
@@ -54,7 +53,6 @@ public class PronosticoDeportivo {
     
     public void puntajes (){
     
-        parti.cargarPuntajes();
-        
+        Participante.cargarPuntajes();    
     }
 }

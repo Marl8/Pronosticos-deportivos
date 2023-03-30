@@ -52,6 +52,29 @@ public class ListaPartidos {
         this.partidos.remove(partido);
     }
 
+     public Partido getPartido (int idPartido) {
+        // Defini un objeto de tipo Equipo en dónde va a ir mi resultado
+        // Inicialmente es null, ya que no he encontrado el equipo que 
+        // buscaba todavía.
+        Partido encontrado = null;
+        
+        // Recorro la lista de equipos que está cargada
+        for (Partido par : this.getPartidos()) {
+            // Para cada equipo obtengo el valor del ID y lo comparo con el que
+            // estoy buscando
+            if (par.getIdPartido()== idPartido) {
+                // Si lo encuentro (son iguales) lo asigno como valor de encontrado
+                encontrado = par;
+                // Y hago un break para salir del ciclo ya que no hace falta seguir buscando
+                break;
+            }
+        }
+        // Una vez fuera del ciclo retorno el equipo, pueden pasar dos cosas:
+        // 1- Lo encontré en el ciclo, entonces encontrado tiene el objeto encontrado
+        // 2- No lo encontré en el ciclo, entonces conserva el valor null del principio
+        return encontrado;
+    }
+    
     @Override
     public String toString() {
         return "ListaPartidos{" + "partidos=" + partidos + ", partidosCSV=" + partidosCSV + '}';
@@ -66,15 +89,15 @@ public class ListaPartidos {
     }
     
       // cargar desde el archivo
-    public void cargarDeArchivo() {
+    public void cargarDeArchivo(ListaEquipos listaEquipos) {
         // para las lineas del archivo csv
         String datosPartidos;
         // para los datos individuales de cada linea
         String vectorPartidos[];
         // para el objeto en memoria
         Partido partido;
-        Equipo equipo1;
-        Equipo equipo2;
+        Equipo equipo1 = new Equipo();
+        Equipo equipo2 = new Equipo(); 
         int i = 0;
         
         int fila = 0;
@@ -99,7 +122,7 @@ public class ListaPartidos {
                 // graba el equipo en memoria
                 
                 if (vectorPartidos.length > 0 && vectorPartidos[i] != null
-                        && Integer.parseInt(vectorPartidos[i]) >= 0) { 
+                    && Integer.parseInt(vectorPartidos[i]) >= 0) { 
       
                 int idPartido = Integer.parseInt(vectorPartidos[0]);
                 int idEquipo1 = Integer.parseInt(vectorPartidos[1]);
@@ -107,16 +130,19 @@ public class ListaPartidos {
                 int golesEquipo1 = Integer.parseInt(vectorPartidos[3]);
                 int golesEquipo2 = Integer.parseInt(vectorPartidos[4]);
                 
-                equipo1 = new Equipo(idEquipo1);
-                equipo2 = new Equipo(idEquipo2);
+                equipo1 = listaEquipos.getEquipo(1);
                 
+                equipo2 = listaEquipos.getEquipo(2);
+                
+                        
                 partido  = new Partido(idPartido, equipo1, equipo2, golesEquipo1, golesEquipo2);
                 // llama al metodo add para grabar el equipo en la lista en memoria
                 
-                addPartidos(partido);
+                this.addPartidos(partido);
                 }         
             }
             //closes the scanners
+            sc.close();
         } catch (IOException ex) {
                 System.out.println("Mensaje: " + ex.getMessage());
         }       

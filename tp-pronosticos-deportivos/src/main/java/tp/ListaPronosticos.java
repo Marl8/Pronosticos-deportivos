@@ -65,11 +65,12 @@ public class ListaPronosticos {
     }
     
      // cargar desde el archivo
-    public void cargarDeArchivo() {
+    public void cargarDeArchivo(ListaEquipos listaEq, ListaPartidos listaPartidos, 
+                                ListaParticipantes listaParticip) {
         // para las lineas del archivo csv
         String datosPronostivo;
         // para los datos individuales de cada linea
-        String vectorPronostico[] = new String[20];
+        String vectorPronostico[];
         // para el objeto en memoria
         Pronostico pronos;
         Participante parti; 
@@ -105,9 +106,9 @@ public class ListaPronosticos {
                 int idEquipo = Integer.parseInt(vectorPronostico[2]);
                 char resultado = vectorPronostico[3].charAt(i);
                 
-                parti = new Participante(idParticipante);
-                partido = new Partido(idPartido);
-                equipo = new Equipo(idEquipo);
+                parti = listaParticip.getParticipante(idParticipante);
+                equipo = listaEq.getEquipo(idEquipo);
+                partido = listaPartidos.getPartido(idPartido);
                 
                 // crea el objeto en memoria
                 pronos = new Pronostico(parti, equipo, partido, resultado);
@@ -117,6 +118,7 @@ public class ListaPronosticos {
                 }
             }
             //closes the scanner
+            sc.close();
         } catch (IOException ex) {
                 System.out.println("Mensaje: " + ex.getMessage());
         }   

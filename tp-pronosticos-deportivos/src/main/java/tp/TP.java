@@ -11,8 +11,10 @@ public class TP {
         
         PRODE = new PronosticoDeportivo();
 
-        //PRODE.play(); 
+        PRODE.play(); 
         
         PRODE.puntajes();
+        
     }
+      
 }

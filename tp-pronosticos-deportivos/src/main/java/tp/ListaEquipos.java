@@ -1,7 +1,10 @@
-/*
-Clase ListaEquipos para la entrega 2
- */
+
 package tp;
+
+/**
+ *
+ * @author Grupo 4
+ */
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ListaEquipos {
-    // atributo
+    
     private List<Equipo> equipos;
     private String equiposCSV;
 
@@ -48,6 +51,34 @@ public class ListaEquipos {
         this.equipos.remove(e);
     }
 
+    /***
+     * Este método devuelve un Equipo (o null) buscandolo por idEquipo
+     * @param idEquipo Identificador del equipo deseado
+     * @return Objeto Equipo (o null si no se encuentra)
+     */
+    public Equipo getEquipo (int idEquipo) {
+        // Defini un objeto de tipo Equipo en dónde va a ir mi resultado
+        // Inicialmente es null, ya que no he encontrado el equipo que 
+        // buscaba todavía.
+        Equipo encontrado = null;
+        
+        // Recorro la lista de equipos que está cargada
+        for (Equipo eq : this.getEquipos()) {
+            // Para cada equipo obtengo el valor del ID y lo comparo con el que
+            // estoy buscando
+            if (eq.getIdEquipo() == idEquipo) {
+                // Si lo encuentro (son iguales) lo asigno como valor de encontrado
+                encontrado = eq;
+                // Y hago un break para salir del ciclo ya que no hace falta seguir buscando
+                break;
+            }
+        }
+        // Una vez fuera del ciclo retorno el equipo, pueden pasar dos cosas:
+        // 1- Lo encontré en el ciclo, entonces encontrado tiene el objeto encontrado
+        // 2- No lo encontré en el ciclo, entonces conserva el valor null del principio
+        return encontrado;
+    }
+    
     @Override
     public String toString() {
         return "ListaEquipos{" + "equipos=" + equipos + '}';
@@ -105,6 +136,7 @@ public class ListaEquipos {
                 }
             }
             //closes the scanner
+            sc.close();
         } catch (IOException ex) {
                 System.out.println("Mensaje: " + ex.getMessage());
         }       

@@ -51,6 +51,29 @@ public class ListaParticipantes {
     public void removeParticipante(Participante parti) {
         this.participantes.remove(parti);
     }
+    
+     public Participante getParticipante (int idParticipante) {
+        // Defini un objeto de tipo Equipo en dónde va a ir mi resultado
+        // Inicialmente es null, ya que no he encontrado el equipo que 
+        // buscaba todavía.
+        Participante encontrado = null;
+        
+        // Recorro la lista de equipos que está cargada
+        for (Participante parti : this.getParticipantes()) {
+            // Para cada equipo obtengo el valor del ID y lo comparo con el que
+            // estoy buscando
+            if (parti.getIdParticipante()== idParticipante) {
+                // Si lo encuentro (son iguales) lo asigno como valor de encontrado
+                encontrado = parti;
+                // Y hago un break para salir del ciclo ya que no hace falta seguir buscando
+                break;
+            }
+        }
+        // Una vez fuera del ciclo retorno el equipo, pueden pasar dos cosas:
+        // 1- Lo encontré en el ciclo, entonces encontrado tiene el objeto encontrado
+        // 2- No lo encontré en el ciclo, entonces conserva el valor null del principio
+        return encontrado;
+    }
 
     @Override
     public String toString() {
@@ -109,6 +132,7 @@ public class ListaParticipantes {
                 }
             }    
             //closes the scanner
+            sc.close();
         } catch (IOException ex) {
                 System.out.println("Mensaje: " + ex.getMessage());
         }       

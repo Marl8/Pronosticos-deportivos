@@ -5,6 +5,7 @@ package tp;
  *
  * @author Grupo 4
  */
+
 public class Participante {
     
     private int idParticipante;
@@ -68,7 +69,7 @@ public class Participante {
         return "Participante{" + "idParticipante=" + idParticipante + ", nombre=" + nombre + '}';
     }
     
-    public void cargarPuntajes () {
+     public static void cargarPuntajes () {
         
        ListaPronosticos pronos = new ListaPronosticos();
        
@@ -78,41 +79,56 @@ public class Participante {
        
        Partido partido2 = new Partido();
        
-       pronos.cargarDeArchivo();
+       ListaEquipos listaEquip = new ListaEquipos();
+       
+       listaEquip.cargarDeArchivo();
        System.out.println("============================================");
-       partido.cargarDeArchivo();
+       partido.cargarDeArchivo(listaEquip);
        System.out.println("============================================");
        parti.cargarDeArchivo();
        System.out.println("============================================");
-        
+       pronos.cargarDeArchivo(listaEquip,partido,parti);
+       System.out.println("============================================");
+       
         int puntos = 0;
-        puntaje = 0;
+        int aciertos = 0;
+        int puntaje = 0;
+        int contadorAciertos = 0;
+
         
-        for (int k = 0; k < parti.getParticipantes().size(); k++) {
+        for (int k   = 0; k < parti.getParticipantes().size(); k++) {
             
             System.out.println("Nombre participante: " + parti.getParticipantes().get(k).getNombre() 
                     + " " + "El Id es: " + parti.getParticipantes().get(k).getIdParticipante());
             
             puntaje = 0;
+            contadorAciertos =  0;
         
             for (int i = 0; i < pronos.getPronosticos().size(); i++) { 
+                
+                if (parti.getParticipantes().get(k).getIdParticipante() == 
+                    pronos.getPronosticos().get(i).getParticipante().getIdParticipante()){
             
-            for (int j = 0; j < partido.getPartidos().size(); j++) {
-               
-                    if (parti.getParticipantes().get(k).getIdParticipante() == 
-                    pronos.getPronosticos().get(i).getParticipante().getIdParticipante()){     
+                    for (int j = 0; j < partido.getPartidos().size(); j++) {  
                     
-                        if  (
-                            partido.getPartidos().get(j).getResultado(pronos.getPronosticos().get(i).getEquipo()) == 
-                            pronos.getPronosticos().get(i).getResultado()){
+                        if (partido.getPartidos().get(j).getIdPartido() ==
+                            pronos.getPronosticos().get(i).getPartido().getIdPartido()){
+                            
+                            if
+                            (partido.getPartidos().get(j).getResultado(pronos.getPronosticos().get(i).getEquipo()) 
+                            ==  pronos.getPronosticos().get(i).getResultado()){
           
-                               puntos = 1;
+                               puntos = 3;
+                               aciertos = 1;
                                puntaje += puntos;
+                               contadorAciertos += aciertos;
+                            }   
                         }
                     }    
                 }
             }
-             System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
+            System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
+            System.out.println("La contidad de aciertos para el participantes es: " + contadorAciertos + " aciertos");
         }    
-    }    
+    }
 }

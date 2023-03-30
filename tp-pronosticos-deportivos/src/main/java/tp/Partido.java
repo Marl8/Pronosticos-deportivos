@@ -73,8 +73,8 @@ public class Partido {
     @Override
     public String toString() {
         return "Partido{" + "idPartido=" + idPartido + 
-                ", equipo1=" + equipo1.getIdEquipo() + 
-                ", equipo2=" + equipo2.getIdEquipo() + 
+                ", equipo1=" + equipo1 + 
+                ", equipo2=" + equipo2 + 
                 ", golesEquipo1=" + golesEquipo1 + 
                 ", golesEquipo2=" + golesEquipo2 + '}';
     }
@@ -82,8 +82,8 @@ public class Partido {
     
     public char getResultado (Equipo equipo) {
         char resultado = ' '; // POR DEFECTO NO SE SABE QUIEN GANO
-        
-        if (equipo.getIdEquipo() == equipo1.getIdEquipo()) {
+     
+        if (equipo.getIdEquipo() == this.equipo1.getIdEquipo()){
             if (this.golesEquipo1 > this.golesEquipo2) {
                 resultado = 'G';
             } else if (this.golesEquipo1 < this.golesEquipo2) {
@@ -91,7 +91,7 @@ public class Partido {
             } else {
                 resultado = 'E';
             }
-        } else if (equipo.getIdEquipo() == equipo2.getIdEquipo()) {
+        } else if (equipo.getIdEquipo() == this.equipo2.getIdEquipo()) {
             if (this.golesEquipo2 > this.golesEquipo1) {
                 resultado = 'G';
             } else if (this.golesEquipo2 < this.golesEquipo1) {
