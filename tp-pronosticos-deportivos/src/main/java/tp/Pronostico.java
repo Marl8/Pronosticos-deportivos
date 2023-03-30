@@ -76,9 +76,9 @@ public class Pronostico {
 
     @Override
     public String toString() {
-        return "Pronostico{" + "participante=" + participante.getIdParticipante()
-                + ", equipo=" + equipo.getIdEquipo() + 
-                ", partido=" + partido.getIdPartido() +
+        return "Pronostico{" + "participante=" + participante
+                + ", equipo=" + equipo + 
+                ", partido=" + partido +
                 ", resultado=" + resultado + '}';
     }
 

@@ -69,7 +69,7 @@ public class Participante {
         return "Participante{" + "idParticipante=" + idParticipante + ", nombre=" + nombre + '}';
     }
     
-     public static void cargarPuntajes () {
+    /* public static void cargarPuntajes () {
         
        ListaPronosticos pronos = new ListaPronosticos();
        
@@ -130,5 +130,5 @@ public class Participante {
             System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
             System.out.println("La contidad de aciertos para el participantes es: " + contadorAciertos + " aciertos");
         }    
-    }
+    }*/
 }
