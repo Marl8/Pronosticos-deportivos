@@ -59,6 +59,11 @@ public class PronosticoDeportivo {
         int aciertos = 0;
         int puntaje = 0;
         int contadorAciertos = 0;
+        
+        System.out.println("""
+                           PUNTAJES 
+                           (1 acierto = 3 puntos)
+                           Los puntajes totales son: """);
 
         // Itero los participantes
         for (int k = 0; k < parti.getParticipantes().size(); k++) {
