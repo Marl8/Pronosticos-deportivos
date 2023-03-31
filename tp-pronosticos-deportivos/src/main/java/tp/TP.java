@@ -13,7 +13,7 @@ public class TP {
 
         PRODE.play(); 
         
-        PRODE.puntajes();
+        PRODE.mostarPuntajes();
         
     }
       

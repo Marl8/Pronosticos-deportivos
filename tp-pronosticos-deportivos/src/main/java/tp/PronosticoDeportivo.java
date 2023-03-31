@@ -60,29 +60,36 @@ public class PronosticoDeportivo {
         int puntaje = 0;
         int contadorAciertos = 0;
 
-        
-        for (int k   = 0; k < parti.getParticipantes().size(); k++) {
+        // Itero los participantes
+        for (int k = 0; k < parti.getParticipantes().size(); k++) {
             
             System.out.println("Nombre participante: " + parti.getParticipantes().get(k).getNombre() 
                     + " " + "El Id es: " + parti.getParticipantes().get(k).getIdParticipante());
             
+            // Reseteo acumuladores para cada nuevo participante
             puntaje = 0;
             contadorAciertos =  0;
         
+            // Itero los pronosticos
             for (int i = 0; i < pronos.getPronosticos().size(); i++) { 
                 
+                // Valido si el ID del participante coincide con el ID de participante del pronóstico
                 if (parti.getParticipantes().get(k).getIdParticipante() == 
                     pronos.getPronosticos().get(i).getParticipante().getIdParticipante()){
             
+                    // Si la validación es TRUE itero sobre los partidos
                     for (int j = 0; j < partido.getPartidos().size(); j++) {  
                     
+                        // Valido si el ID del partido es igual al ID del partido del pronóstico
                         if (partido.getPartidos().get(j).getIdPartido() ==
                             pronos.getPronosticos().get(i).getPartido().getIdPartido()){
                             
+                        // Si la valición es TRUE comparo los resultado del partido y del pronostico   
                             if
                             (partido.getPartidos().get(j).getResultado(pronos.getPronosticos().get(i).getEquipo()) 
                             ==  pronos.getPronosticos().get(i).getResultado()){
           
+                            // Asigno puntos y los acumulo y lo mismo con los aciertos    
                                puntos = 3;
                                aciertos = 1;
                                puntaje += puntos;
@@ -97,7 +104,7 @@ public class PronosticoDeportivo {
         }    
     }
     
-    public void puntajes (){
+    public void mostarPuntajes (){
     
         PronosticoDeportivo.cargarPuntajes(equipos, partidos, participantes, pronosticos);    
     }

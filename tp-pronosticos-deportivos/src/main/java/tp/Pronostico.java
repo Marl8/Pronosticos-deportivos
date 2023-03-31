@@ -18,12 +18,6 @@ public class Pronostico {
         
     }
 
-    public Pronostico(Participante participante, Equipo equipo, Partido partido, char resultado) {
-        this.participante = participante;
-        this.equipo = equipo;
-        this.partido = partido;
-        this.resultado = resultado;
-    }
 
     public Pronostico(int idPronostico, Participante participante, Equipo equipo, Partido partido, char resultado) {
         this.idPronostico = idPronostico;

@@ -101,17 +101,18 @@ public class ListaPronosticos {
                         && Integer.parseInt(vectorPronostico[i]) >= 0) {
                 // graba el equipo en memoria
                 //convertir un string a un entero;
-                int idParticipante = Integer.parseInt(vectorPronostico[0]);
-                int idPartido = Integer.parseInt(vectorPronostico[1]);
-                int idEquipo = Integer.parseInt(vectorPronostico[2]);
-                char resultado = vectorPronostico[3].charAt(i);
+                int idPronostico = Integer.parseInt(vectorPronostico[0]);
+                int idParticipante = Integer.parseInt(vectorPronostico[1]);
+                int idPartido = Integer.parseInt(vectorPronostico[2]);
+                int idEquipo = Integer.parseInt(vectorPronostico[3]);
+                char resultado = vectorPronostico[4].charAt(i);
                 
                 parti = listaParticip.getParticipante(idParticipante);
                 equipo = listaEq.getEquipo(idEquipo);
                 partido = listaPartidos.getPartido(idPartido);
                 
                 // crea el objeto en memoria
-                pronos = new Pronostico(parti, equipo, partido, resultado);
+                pronos = new Pronostico(idPronostico, parti, equipo, partido, resultado);
                 
                 // llama al metodo add para grabar el equipo en la lista en memoria
                 this.addPronostico(pronos);
