@@ -45,7 +45,7 @@ public class ListaParticipantes {
     }
     
        // add y remove elementos
-    public void addParticpante(Participante parti) {
+    public void addParticipante(Participante parti) {
         this.participantes.add(parti);
     }
     public void removeParticipante(Participante parti) {
@@ -125,10 +125,9 @@ public class ListaParticipantes {
 
                 // crea el objeto en memoria
                 participante = new Participante(idparticipante, nombre);
-                System.out.println(participante);
                 
                 // llama al metodo add para grabar el equipo en la lista en memoria
-                this.addParticpante(participante);
+                this.addParticipante(participante);
                 }
             }    
             //closes the scanner

@@ -43,7 +43,7 @@ public class PronosticoDeportivo {
         System.out.println("Los partidos cargados son: " + partidos.listar());
         System.out.println("============================================");
         
-        System.out.println("Los particpantes cargados son: " + participantes.listar());
+        System.out.println("Los participantes cargados son: " + participantes.listar());
         System.out.println("============================================");
         
         System.out.println("Los pronosticos cargados son: " + pronosticos.listar());
@@ -100,7 +100,7 @@ public class PronosticoDeportivo {
                 }
             }
             System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
-            System.out.println("La cantidad de aciertos para el participantes es: " + contadorAciertos + " aciertos");
+            System.out.println("La cantidad de aciertos para el participante es: " + contadorAciertos + " aciertos");
         }    
     }
     
