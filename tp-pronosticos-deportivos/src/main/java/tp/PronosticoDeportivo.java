@@ -62,20 +62,20 @@ public class PronosticoDeportivo {
         
         System.out.println("""
                            PUNTAJES 
-                           (1 acierto = 3 puntos)
-                           Los puntajes totales son: """);
+                           (1 acierto = 3 puntos) \n
+                           Los puntajes totales son: \n""");
 
-        // Itero los participantes
+        // Itero sobre los participantes
         for (int k = 0; k < parti.getParticipantes().size(); k++) {
             
             System.out.println("Nombre participante: " + parti.getParticipantes().get(k).getNombre() 
-                    + " " + "El Id es: " + parti.getParticipantes().get(k).getIdParticipante());
+                    + " " + "el Id es: " + parti.getParticipantes().get(k).getIdParticipante());
             
             // Reseteo acumuladores para cada nuevo participante
             puntaje = 0;
             contadorAciertos =  0;
         
-            // Itero los pronosticos
+            // Itero sobre los pronósticos
             for (int i = 0; i < pronos.getPronosticos().size(); i++) { 
                 
                 // Valido si el ID del participante coincide con el ID de participante del pronóstico
@@ -104,9 +104,12 @@ public class PronosticoDeportivo {
                     }    
                 }
             }
-            System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
-            System.out.println("La cantidad de aciertos para el participante es: " + contadorAciertos + " aciertos");
-        }    
+            System.out.println("El puntaje para el participante es: " 
+                              + puntaje + " puntos" + "\n"
+                              + "La cantidad de aciertos para el participante es: " 
+                              + contadorAciertos + " aciertos" + "\n"
+                              + "--------------------------------------------");
+        }   
     }
     
     public void mostarPuntajes (){
