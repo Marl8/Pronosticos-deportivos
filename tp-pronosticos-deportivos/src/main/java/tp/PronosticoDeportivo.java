@@ -1,5 +1,10 @@
-
+/*
+Para entrega 2
+ */
 package tp;
+
+import java.util.List;
+
 
 /**
  *
@@ -7,113 +12,82 @@ package tp;
  */
 
 public class PronosticoDeportivo {
-    
     private ListaEquipos equipos;
     private ListaPartidos partidos;
     private ListaParticipantes participantes;
     private ListaPronosticos pronosticos;
-    private Participante parti;
 
     public PronosticoDeportivo() {
         equipos = new ListaEquipos();
         partidos = new ListaPartidos();
         participantes = new ListaParticipantes();
         pronosticos = new ListaPronosticos();
-        parti = new Participante();
     }
-   
 
     public void play(){
         // cargar y listar los equipos
         equipos.cargarDeArchivo();
-        
-       // cargar y listar los partidos
-        partidos.cargarDeArchivo(equipos);
-        
-        //cargar y listar los participantes
-        participantes.cargarDeArchivo();
-        
-        //cargar y listar los pronosticos
-        pronosticos.cargarDeArchivo(equipos, partidos, 
-                                   participantes);
-        
         System.out.println("Los equipos cargados son: " + equipos.listar());
-        System.out.println("============================================");
         
+        System.out.println("================================================");
+        
+        partidos.cargarDeArchivo(equipos);
         System.out.println("Los partidos cargados son: " + partidos.listar());
-        System.out.println("============================================");
+        
+        System.out.println("================================================");
+
+        participantes.cargarDeArchivo();
+        // Una vez cargados los participantes, para cada uno de ellos
+        // cargar sus pronósticos
+        for (Participante p : participantes.getParticipantes()) {
+            p.cargarPronosticos(equipos, partidos);
+        }
         
         System.out.println("Los participantes cargados son: " + participantes.listar());
-        System.out.println("============================================");
         
-        System.out.println("Los pronosticos cargados son: " + pronosticos.listar());
-        System.out.println("============================================");
-    
-    }  
-    
-    
-    public static void cargarPuntajes (ListaEquipos listaEquip, ListaPartidos partido, 
-                                      ListaParticipantes parti, ListaPronosticos pronos) {
-
-        int puntos = 0;
-        int aciertos = 0;
-        int puntaje = 0;
-        int contadorAciertos = 0;
+        System.out.println("================================================");
         
-        System.out.println("""
-                           PUNTAJES 
-                           (1 acierto = 3 puntos) \n
-                           Los puntajes totales son: \n""");
-
-        // Itero sobre los participantes
-        for (int k = 0; k < parti.getParticipantes().size(); k++) {
-            
-            System.out.println("Nombre participante: " + parti.getParticipantes().get(k).getNombre() 
-                    + " " + "el Id es: " + parti.getParticipantes().get(k).getIdParticipante());
-            
-            // Reseteo acumuladores para cada nuevo participante
-            puntaje = 0;
-            contadorAciertos =  0;
+    } 
+    
+   public void mostrarPuntajes () {
+       
+       List<Participante> parti = participantes.getParticipantes();
+       List<Participante> parti2 = parti;
+       
+       System.out.println("Puntajes Finales: \n");
         
-            // Itero sobre los pronósticos
-            for (int i = 0; i < pronos.getPronosticos().size(); i++) { 
-                
-                // Valido si el ID del participante coincide con el ID de participante del pronóstico
-                if (parti.getParticipantes().get(k).getIdParticipante() == 
-                    pronos.getPronosticos().get(i).getParticipante().getIdParticipante()){
+        for (Participante participante : parti) {
+        
+            System.out.println("Participante: " + participante.getNombre() + "\n" 
+                                + "El puntaje para el participante es: " + participante.getPuntaje() + " puntos \n"
+                                + "La cantidad de aciertos para el participante es: " 
+                                +  participante.getAciertos());
             
-                    // Si la validación es TRUE itero sobre los partidos
-                    for (int j = 0; j < partido.getPartidos().size(); j++) {  
-                    
-                        // Valido si el ID del partido es igual al ID del partido del pronóstico
-                        if (partido.getPartidos().get(j).getIdPartido() ==
-                            pronos.getPronosticos().get(i).getPartido().getIdPartido()){
-                            
-                        // Si la valición es TRUE comparo los resultado del partido y del pronostico   
-                            if
-                            (partido.getPartidos().get(j).getResultado(pronos.getPronosticos().get(i).getEquipo()) 
-                            ==  pronos.getPronosticos().get(i).getResultado()){
-          
-                            // Asigno puntos y los acumulo y lo mismo con los aciertos    
-                               puntos = 3;
-                               aciertos = 1;
-                               puntaje += puntos;
-                               contadorAciertos += aciertos;
-                            }   
-                        }
-                    }    
-                }
-            }
-            System.out.println("El puntaje para el participante es: " 
-                              + puntaje + " puntos" + "\n"
-                              + "La cantidad de aciertos para el participante es: " 
-                              + contadorAciertos + " aciertos" + "\n"
-                              + "--------------------------------------------");
+            System.out.println("================================================");
+            
         }   
-    }
-    
-    public void mostarPuntajes (){
-    
-        PronosticoDeportivo.cargarPuntajes(equipos, partidos, participantes, pronosticos);    
-    }
+   }
+   
+   public void mostarPuntajesOrdenados () {
+       
+       List<Participante> parti = participantes.getParticipantes();
+       
+       Participante participante = new Participante();
+       
+       String lista = participante.ordenarPorPuntajes(parti).toString();
+       
+       System.out.println("Los Puntajes de los participantes ordenados de mayor a menor son: \n"
+              + lista + "\n" + "-----------------------------"); 
+   }
+   
+    public void mostrarGanador () {
+   
+       List<Participante> parti = participantes.getParticipantes();
+       
+       Participante participante = new Participante();
+  
+        System.out.println("¡¡GANADOR!! \n");
+        
+        participante.ganador(parti);
+   }
 }

@@ -110,7 +110,9 @@ public class ListaEquipos {
             while (sc.hasNext()) {
                 // levanta los datos de cada linea
                 datosEquipo = sc.next();
-                System.out.println(datosEquipo);  //muestra los datos levantados 
+                
+                //System.out.println(datosEquipo);  //muestra los datos levantados 
+                
                 fila ++;
                 // si es la cabecera la descarto y no se considera para armar el listado
                 if (fila == 1)

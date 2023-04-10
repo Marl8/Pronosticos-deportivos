@@ -1,5 +1,7 @@
-
 package tp;
+
+import java.util.Comparator;
+import java.util.List;
 
 /**
  *
@@ -7,36 +9,33 @@ package tp;
  */
 
 public class Participante {
-    
-    private int idParticipante;
+    private Integer idParticipante;
     private String nombre;
     private ListaPronosticos pronosticos;
-    private int puntaje;
-
-    public Participante() {
-    }
-
-    public Participante(int idParticipante) {
-        this.idParticipante = idParticipante;
-    }
-
-    public Participante(int idParticipante, String nombre) {
-        this.idParticipante = idParticipante;
-        this.nombre = nombre;
-    }
-
-    public Participante(int idParticipante, String nombre, ListaPronosticos pronosticos, int puntaje) {
+    
+    public Participante(Integer idParticipante, String nombre, ListaPronosticos pronosticos) {
         this.idParticipante = idParticipante;
         this.nombre = nombre;
         this.pronosticos = pronosticos;
-        this.puntaje = puntaje;
     }
 
-    public int getIdParticipante() {
+    public Participante(Integer idParticipante, String nombre) {
+        this.idParticipante = idParticipante;
+        this.nombre = nombre;
+        this.pronosticos = new ListaPronosticos();
+    }
+
+    public Participante() {
+        this.idParticipante = null;
+        this.nombre = null;
+        this.pronosticos = new ListaPronosticos();
+    }
+
+    public Integer getIdParticipante() {
         return idParticipante;
     }
 
-    public void setIdParticipante(int idParticipante) {
+    public void setIdParticipante(Integer idParticipante) {
         this.idParticipante = idParticipante;
     }
 
@@ -56,79 +55,62 @@ public class Participante {
         this.pronosticos = pronosticos;
     }
 
+    // retorna el puntaje del participando calculando los valores de los pronosticos
     public int getPuntaje() {
+        // Para ver el puntaje debo recorrer los pronosticos y ver el puntaje
+        // de cada uno y acumularlo. Debo devolver el total.
+        int puntaje = 0;
+        // el primer mensaje corresponde al atributo pronosticos de participante
+        // el segundo mensaje corresponde a la lista que tiene el atributo pronosticos
+        // de esa lista se obtiene cada pronostico y se saca el puntaje acumulandolo en 
+        // la variable puntaje
+        for (Pronostico p : this.getPronosticos().getPronosticos()) {
+            puntaje += p.puntos();
+        }
         return puntaje;
     }
+    
+    public int getAciertos() {
 
-    public void setPuntaje(int puntaje) {
-        this.puntaje = puntaje;
+        int aciertos = 0;
+     
+        for (Pronostico p : this.getPronosticos().getPronosticos()) {
+            aciertos += p.puntos();
+        }
+        return aciertos;
     }
 
     @Override
     public String toString() {
-        return "Participante{" + "idParticipante=" + idParticipante + ", nombre=" + nombre + '}';
+
+        return 
+                "Participante: " +
+                "nombre: " + nombre + "\n" +
+                "El id del Participante es: " + idParticipante + "\n" +
+                "Sus pronosticos son: " + pronosticos + "\n" +
+                "Su puntaje final es " + getPuntaje() + " puntos" + "\n" +
+                "La cantidad de aciertos es: " + getAciertos() + " aciertos" + "\n" +
+                "=======================================" + " \n";
+    }    
+    
+    void cargarPronosticos (ListaEquipos equipos, ListaPartidos partidos) {
+        this.pronosticos.cargarDeArchivo(this.getIdParticipante(), equipos, partidos);
     }
     
-    /* public static void cargarPuntajes () {
-        
-       ListaPronosticos pronos = new ListaPronosticos();
-       
-       ListaParticipantes parti = new ListaParticipantes();
-       
-       ListaPartidos partido = new ListaPartidos();
-       
-       Partido partido2 = new Partido();
-       
-       ListaEquipos listaEquip = new ListaEquipos();
-       
-       listaEquip.cargarDeArchivo();
-       System.out.println("============================================");
-       partido.cargarDeArchivo(listaEquip);
-       System.out.println("============================================");
-       parti.cargarDeArchivo();
-       System.out.println("============================================");
-       pronos.cargarDeArchivo(listaEquip,partido,parti);
-       System.out.println("============================================");
-       
-        int puntos = 0;
-        int aciertos = 0;
-        int puntaje = 0;
-        int contadorAciertos = 0;
+    public List<Participante> ordenarPorPuntajes (List<Participante> participantes) {
 
+            participantes.sort(Comparator.comparing(Participante::getPuntaje).reversed());
+            
+            return participantes;
+    }
+    
+    public void ganador (List<Participante> participantes) {
+    
+        this.ordenarPorPuntajes(participantes);
         
-        for (int k   = 0; k < parti.getParticipantes().size(); k++) {
-            
-            System.out.println("Nombre participante: " + parti.getParticipantes().get(k).getNombre() 
-                    + " " + "El Id es: " + parti.getParticipantes().get(k).getIdParticipante());
-            
-            puntaje = 0;
-            contadorAciertos =  0;
-        
-            for (int i = 0; i < pronos.getPronosticos().size(); i++) { 
-                
-                if (parti.getParticipantes().get(k).getIdParticipante() == 
-                    pronos.getPronosticos().get(i).getParticipante().getIdParticipante()){
-            
-                    for (int j = 0; j < partido.getPartidos().size(); j++) {  
-                    
-                        if (partido.getPartidos().get(j).getIdPartido() ==
-                            pronos.getPronosticos().get(i).getPartido().getIdPartido()){
-                            
-                            if
-                            (partido.getPartidos().get(j).getResultado(pronos.getPronosticos().get(i).getEquipo()) 
-                            ==  pronos.getPronosticos().get(i).getResultado()){
-          
-                               puntos = 3;
-                               aciertos = 1;
-                               puntaje += puntos;
-                               contadorAciertos += aciertos;
-                            }   
-                        }
-                    }    
-                }
-            }
-            System.out.println("El puntaje para el participante es: " + puntaje + " puntos");
-            System.out.println("La contidad de aciertos para el participantes es: " + contadorAciertos + " aciertos");
-        }    
-    }*/
+        System.out.println("El ganador es el " + participantes.get(0));
+    }
 }
+
+    // Y finalmente armar un metodo que cargue desde un JSON
+

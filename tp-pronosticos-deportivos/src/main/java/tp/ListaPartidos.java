@@ -109,7 +109,9 @@ public class ListaPartidos {
             while (sc.hasNext()) {
                 // levanta los datos de cada linea
                 datosPartidos = sc.next();
-                System.out.println(datosPartidos);  //muestra los datos levantados 
+                
+                //System.out.println(datosPartidos);  //muestra los datos levantados 
+                
                 fila ++;
                 // si es la cabecera la descarto y no se considera para armar el listado
                 if (fila == 1)

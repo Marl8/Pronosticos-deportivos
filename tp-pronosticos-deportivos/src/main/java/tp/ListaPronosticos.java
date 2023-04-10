@@ -1,25 +1,36 @@
-
+/*
+Clase ListaPronosticos para la entrega 2
+ */
 package tp;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
-/**
- *
- * @author Grupo 4
- */
-
 public class ListaPronosticos {
-    
-    private ArrayList <Pronostico> pronosticos;
+
+    // atributo
+    private List<Pronostico> pronosticos;
     private String pronosticosCSV;
 
+    public ListaPronosticos(List<Pronostico> pronosticos, String pronosticosCSV) {
+        this.pronosticos = pronosticos;
+        this.pronosticosCSV = pronosticosCSV;
+    }
+
     public ListaPronosticos() {
-        
         this.pronosticos = new ArrayList<Pronostico>();
         this.pronosticosCSV = "pronosticos.csv";
+    }
+
+    public List<Pronostico> getPronosticos() {
+        return pronosticos;
+    }
+
+    public void setPronosticos(List<Pronostico> pronosticos) {
+        this.pronosticos = pronosticos;
     }
 
     public String getPronosticosCSV() {
@@ -30,99 +41,153 @@ public class ListaPronosticos {
         this.pronosticosCSV = pronosticosCSV;
     }
 
-    public ListaPronosticos(ArrayList<Pronostico> pronosticos, String nombreArchivo) {
-        this.pronosticos = pronosticos;
-        this.pronosticosCSV = nombreArchivo;
+    // add y remove elementos
+    public void addPronostico(Pronostico p) {
+        this.pronosticos.add(p);
     }
 
-    public ArrayList<Pronostico> getPronosticos() {
-        return pronosticos;
+    public void removePronostico(Pronostico p) {
+        this.pronosticos.remove(p);
     }
 
-    public void setPronosticos(ArrayList<Pronostico> pronosticos) {
-        this.pronosticos = pronosticos;
-    }  
-
-     // add y remove elementos
-    public void addPronostico(Pronostico pronos) {
-        this.pronosticos.add(pronos);
-    }
-    public void removePronostico(Pronostico pronos) {
-        this.pronosticos.remove(pronos);
-    }
-    
     @Override
     public String toString() {
-        return "ListaPronosticos{" + "pronosticos=" + pronosticos + ", pronosticosCSV=" + pronosticosCSV + '}';
+        return "ListaParticipantes{" + "pronosticos=" + pronosticos + '}';
     }
-    
-     public String listar() {
+
+    public String listar() {
         String lista = "";
-        for (Pronostico pronos : pronosticos) {
-            lista += "\n" + pronos;
-        }           
+        for (Pronostico pronostico : pronosticos) {
+            lista += "\n" + pronostico;
+        }
         return lista;
     }
-    
-     // cargar desde el archivo
-    public void cargarDeArchivo(ListaEquipos listaEq, ListaPartidos listaPartidos, 
-                                ListaParticipantes listaParticip) {
+
+    // Cargar desde el archivo, filtrando solamente aquellos pronósticos
+    // cuyo idParticipante coincide con el indicado
+    // De esa forma todos los pronósticos de la lista pertenecen al mismo participante.
+    public void cargarDeArchivo(
+            int idParticipante, // id del participante que realizó el pronóstico
+            ListaEquipos listaequipos, // lista de equipos
+            ListaPartidos listapartidos // lista de partidos
+    ) {
         // para las lineas del archivo csv
-        String datosPronostivo;
+        String datosPronostico;
         // para los datos individuales de cada linea
         String vectorPronostico[];
-        // para el objeto en memoria
-        Pronostico pronos;
-        Participante parti; 
-        Partido partido;
-        Equipo equipo;
+
         int fila = 0;
-        int i = 1; 
-       
-        try { 
-            Scanner sc = new Scanner(new File("./pronosticos.csv"));
+
+        try {
+            Scanner sc = new Scanner(new File(this.getPronosticosCSV()));
             sc.useDelimiter("\n");   //setea el separador de los datos
-                
+
             while (sc.hasNext()) {
                 // levanta los datos de cada linea
-                datosPronostivo = sc.next();
-                System.out.println(datosPronostivo);  //muestra los datos levantados 
-                fila ++;
+                datosPronostico = sc.next();
+                // Descomentar si se quiere mostrar cada línea leída desde el archivo
+               
+                // System.out.println(datosPronostico);  //muestra los datos levantados 
+                
+                fila++;
                 // si es la cabecera la descarto y no se considera para armar el listado
-                if (fila == 1)
-                    continue;              
-                 
+                if (fila == 1) {
+                    continue;
+                }
+
                 //Proceso auxiliar para convertir los string en vector
                 // guarda en un vector los elementos individuales
-                vectorPronostico = datosPronostivo.split(",");   
-                
-                 
-                if (vectorPronostico.length > 0 && vectorPronostico[i] != null
-                        && Integer.parseInt(vectorPronostico[i]) >= 0) {
+                vectorPronostico = datosPronostico.split(",");
+
+                // graba el equipo en memoria
+                //convertir un string a un entero;
+                int idPronostico = Integer.parseInt(vectorPronostico[0]);
+                int idParticipantePronos = Integer.parseInt(vectorPronostico[1]);
+                int idPartido = Integer.parseInt(vectorPronostico[2]);
+                int idEquipo = Integer.parseInt(vectorPronostico[3]);
+                char resultado = vectorPronostico[4].charAt(1);     // El primer caracter es una comilla delimitadora de campo
+                // Si coincide el idParticipante con el que estoy queriendo cargar,
+                // sigo, si no, salteo el registro y voy al siguiente
+                if (idParticipantePronos == idParticipante) {
+                    // Obtener los objetos que necesito para el constructor
+                    Partido partido = listapartidos.getPartido(idPartido);
+                    Equipo equipo = listaequipos.getEquipo(idEquipo);
+                    // crea el objeto en memoria
+                    Pronostico pronostico = new Pronostico(
+                            idPronostico, // El id leido del archivo
+                            equipo, // El Equipo que obtuvimos de la lista
+                            partido, // El Partido que obtuvimos de la lista
+                            resultado // El resultado que leimos del archivo
+                    );
+
+                    // llama al metodo add para grabar el equipo en la lista en memoria
+                    this.addPronostico(pronostico);
+                }
+            }
+            //closes the scanner
+        } catch (IOException ex) {
+            System.out.println("Mensaje: " + ex.getMessage());
+        }
+    }
+        
+    public void cargarDeArchivoTodos(
+            ListaEquipos listaequipos, // lista de equipos
+            ListaPartidos listapartidos // lista de partidos
+    ) {
+        // para las lineas del archivo csv
+        String datosPronostico;
+        // para los datos individuales de cada linea
+        String vectorPronostico[];
+
+        int fila = 0;
+
+        try {
+            Scanner sc = new Scanner(new File(this.getPronosticosCSV()));
+            sc.useDelimiter("\n");   //setea el separador de los datos
+
+            while (sc.hasNext()) {
+                // levanta los datos de cada linea
+                datosPronostico = sc.next();
+                // Descomentar si se quiere mostrar cada línea leída desde el archivo
+                // System.out.println(datosPronostico);  //muestra los datos levantados 
+                fila++;
+                // si es la cabecera la descarto y no se considera para armar el listado
+                if (fila == 1) {
+                    continue;
+                }
+
+                //Proceso auxiliar para convertir los string en vector
+                // guarda en un vector los elementos individuales
+                vectorPronostico = datosPronostico.split(",");
+
                 // graba el equipo en memoria
                 //convertir un string a un entero;
                 int idPronostico = Integer.parseInt(vectorPronostico[0]);
                 int idParticipante = Integer.parseInt(vectorPronostico[1]);
                 int idPartido = Integer.parseInt(vectorPronostico[2]);
                 int idEquipo = Integer.parseInt(vectorPronostico[3]);
-                char resultado = vectorPronostico[4].charAt(i);
+                char resultado = vectorPronostico[4].charAt(1);     // El primer caracter es una comilla delimitadora de campo
                 
-                parti = listaParticip.getParticipante(idParticipante);
-                equipo = listaEq.getEquipo(idEquipo);
-                partido = listaPartidos.getPartido(idPartido);
-                
+                // Obtener los objetos que necesito para el constructor
+                Partido partido = listapartidos.getPartido(idPartido);
+                Equipo equipo = listaequipos.getEquipo(idEquipo);
                 // crea el objeto en memoria
-                pronos = new Pronostico(idPronostico, parti, equipo, partido, resultado);
-                
+                Pronostico pronostico = new Pronostico(
+                        idPronostico, // El id leido del archivo
+                        idParticipante,
+                        equipo, // El Equipo que obtuvimos de la lista
+                        partido, // El Partido que obtuvimos de la lista
+                        resultado // El resultado que leimos del archivo,
+                        
+                );
+
                 // llama al metodo add para grabar el equipo en la lista en memoria
-                this.addPronostico(pronos);
-                }
+                this.addPronostico(pronostico);
+
             }
             //closes the scanner
-            sc.close();
         } catch (IOException ex) {
-                System.out.println("Mensaje: " + ex.getMessage());
-        }   
-        i++;
+            System.out.println("Mensaje: " + ex.getMessage());
+        }
     }
 }

@@ -1,4 +1,6 @@
-
+/*
+ Para entrega 2
+ */
 package tp;
 
 public class TP {
@@ -8,13 +10,17 @@ public class TP {
    
     public static void main(String[] args) {
         System.out.println ("Sistema de simulación de pronósticos deportivos.");
+        System.out.println ("Ejecutándose desde:"+System.getProperty("user.dir"));
         
         PRODE = new PronosticoDeportivo();
 
-        PRODE.play(); 
+        PRODE.play();
         
-        PRODE.mostarPuntajes();
+        PRODE.mostrarPuntajes();
         
+        PRODE.mostarPuntajesOrdenados();
+        
+        PRODE.mostrarGanador();
     }
-      
+    
 }
