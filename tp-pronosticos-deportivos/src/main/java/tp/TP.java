@@ -1,6 +1,4 @@
-/*
- Para entrega 2
- */
+
 package tp;
 
 public class TP {
