@@ -63,7 +63,7 @@ public class PronosticoDeportivo {
                                 + "La cantidad de aciertos para el participante es: " 
                                 +  participante.getAciertos());
             
-            System.out.println("================================================");
+            System.out.println("================================================ \n");
             
         }   
    }
@@ -76,8 +76,10 @@ public class PronosticoDeportivo {
        
        String lista = participante.ordenarPorPuntajes(parti).toString();
        
-       System.out.println("Los Puntajes de los participantes ordenados de mayor a menor son: \n"
-              + lista + "\n" + "-----------------------------"); 
+       System.out.println("""
+                          Los Puntajes de los participantes ordenados de mayor a menor son: 
+                          
+                          """ + lista + "\n" + "-----------------------------"); 
    }
    
     public void mostrarGanador () {
@@ -86,8 +88,8 @@ public class PronosticoDeportivo {
        
        Participante participante = new Participante();
   
-        System.out.println("¡¡GANADOR!! \n");
-        
-        participante.ganador(parti);
+        System.out.println("¡¡GANADOR!! \n "); 
+        System.out.println("El ganador es: \n" 
+                + participante.ganador(parti));
    }
 }

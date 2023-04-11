@@ -104,11 +104,13 @@ public class Participante {
             return participantes;
     }
     
-    public void ganador (List<Participante> participantes) {
+    public Participante ganador (List<Participante> participantes) {
     
         this.ordenarPorPuntajes(participantes);
         
-        System.out.println("El ganador es el " + participantes.get(0));
+        Participante participante = participantes.get(0);
+        
+        return participante;
     }
 }
 
