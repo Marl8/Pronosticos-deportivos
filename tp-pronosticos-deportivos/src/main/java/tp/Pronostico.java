@@ -3,7 +3,7 @@ package tp;
 
 /**
  *
- * @author Grupo 4
+ * @author Martin Lemberger
  */
 
 public class Pronostico {

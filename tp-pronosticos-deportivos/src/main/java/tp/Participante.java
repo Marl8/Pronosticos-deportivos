@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Grupo 4
+ * @author Martin Lemberger
  */
 
 public class Participante {
@@ -108,9 +108,9 @@ public class Participante {
     
         this.ordenarPorPuntajes(participantes);
         
-        Participante participante = participantes.get(0);
+        Participante ganador = participantes.get(0);
         
-        return participante;
+        return ganador;
     }
 }
 
