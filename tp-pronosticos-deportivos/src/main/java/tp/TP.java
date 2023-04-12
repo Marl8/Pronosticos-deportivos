@@ -14,11 +14,11 @@ public class TP {
 
         PRODE.play();
         
-        PRODE.mostrarPuntajes();
+       PRODE.mostrarPuntajes();
         
-        PRODE.mostarPuntajesOrdenados();
+       PRODE.mostarPuntajesOrdenados();
         
-        PRODE.mostrarGanador();
+       PRODE.mostrarGanador();
     }
     
 }

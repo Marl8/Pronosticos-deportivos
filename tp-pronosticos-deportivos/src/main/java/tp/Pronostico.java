@@ -84,8 +84,8 @@ public class Pronostico {
     public int puntos () {
      
         int puntos = 0;
-
-        if (partido.getResultado(this.equipo) == this.resultado) {       
+        
+        if (this.partido.getResultado(this.equipo) == this.resultado) {       
             puntos = 1;
         }     
         return puntos;

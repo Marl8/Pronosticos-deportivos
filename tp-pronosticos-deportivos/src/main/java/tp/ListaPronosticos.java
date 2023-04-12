@@ -77,6 +77,8 @@ public class ListaPronosticos {
         String vectorPronostico[];
 
         int fila = 0;
+        
+        Equipo equipo;
 
         try {
             Scanner sc = new Scanner(new File(this.getPronosticosCSV()));
@@ -111,7 +113,15 @@ public class ListaPronosticos {
                 if (idParticipantePronos == idParticipante) {
                     // Obtener los objetos que necesito para el constructor
                     Partido partido = listapartidos.getPartido(idPartido);
-                    Equipo equipo = listaequipos.getEquipo(idEquipo);
+                    
+                     equipo = new Equipo();
+                    
+                    if(idEquipo == 1) {
+                      equipo =  partido.getEquipo1();
+                    }else if (idEquipo == 2) {
+                      equipo =  partido.getEquipo2();
+                    }
+                    
                     // crea el objeto en memoria
                     Pronostico pronostico = new Pronostico(
                             idPronostico, // El id leido del archivo

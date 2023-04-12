@@ -132,9 +132,9 @@ public class ListaPartidos {
                 int golesEquipo1 = Integer.parseInt(vectorPartidos[3]);
                 int golesEquipo2 = Integer.parseInt(vectorPartidos[4]);
                 
-                equipo1 = listaEquipos.getEquipo(1);
+                equipo1 = listaEquipos.getEquipo(idEquipo1);
                 
-                equipo2 = listaEquipos.getEquipo(2);
+                equipo2 = listaEquipos.getEquipo(idEquipo2);
                 
                         
                 partido  = new Partido(idPartido, equipo1, equipo2, golesEquipo1, golesEquipo2);
