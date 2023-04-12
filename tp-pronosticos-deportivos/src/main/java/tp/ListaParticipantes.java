@@ -170,7 +170,8 @@ public class ListaParticipantes {
             
             if (participante.get(i).getPuntaje() == ganador.getPuntaje()) {
             
-                lista += "\n" + participante.get(i).getNombre();   
+                lista += "\n" + participante.get(i).getNombre() +
+                    " con "    + participante.get(i).getPuntaje() + " puntos";   
             }
         }
         System.out.println("El/los ganador/es: \n" + lista);
