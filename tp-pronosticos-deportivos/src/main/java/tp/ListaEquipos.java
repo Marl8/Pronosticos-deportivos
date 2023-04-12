@@ -3,14 +3,15 @@ package tp;
 
 /**
  *
- * @author Grupo 4
+ * @author Martin Lemberger
  */
 
-import java.io.File;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ListaEquipos {
     
@@ -23,7 +24,7 @@ public class ListaEquipos {
     }
     
     public ListaEquipos() {
-        this.equipos = new ArrayList<Equipo>();
+        this.equipos = new ArrayList<>();
         this.equiposCSV = "equipos.csv";
     }
 
@@ -92,57 +93,39 @@ public class ListaEquipos {
         return lista;
     }
     
-    // cargar desde el archivo
-    public void cargarDeArchivo() {
-        // para las lineas del archivo csv
-        String datosEquipo;
-        // para los datos individuales de cada linea
-        String vectorEquipo[];
-        // para el objeto en memoria
-        Equipo equipo;
-        int fila = 0;
-        int i = 0;
-       
-        try { 
-            Scanner sc = new Scanner(new File("./Equipos.csv"));
-            sc.useDelimiter("\n");   //setea el separador de los datos
+     public void cargarDeArchivo() {
+     
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            final Connection con = factory.conexion();
+            
+            // Try/Catch with resources
+            try (con) {
                 
-            while (sc.hasNext()) {
-                // levanta los datos de cada linea
-                datosEquipo = sc.next();
+                final PreparedStatement statement = con.prepareStatement
+            		("SELECT idEquipo, Nombre, Descripcion FROM equipos");
                 
-                //System.out.println(datosEquipo);  //muestra los datos levantados 
+                // Try/Catch with resources
+                try (statement) {
+                statement.execute();
+    
+                final ResultSet resultSet = statement.getResultSet();
                 
-                fila ++;
-                // si es la cabecera la descarto y no se considera para armar el listado
-                if (fila == 1)
-                    continue;              
-                 
-                //Proceso auxiliar para convertir los string en vector
-                // guarda en un vector los elementos individuales
-                vectorEquipo = datosEquipo.split(",");   
-                
-                 
-                if (vectorEquipo.length > 0 && Integer.parseInt(vectorEquipo[i]) >= 0
-                        && vectorEquipo[i] != null) {
-                // graba el equipo en memoria
-                //convertir un string a un entero;
-                int idEquipo = Integer.parseInt(vectorEquipo[0]);
-                String nombre = vectorEquipo[1];
-                String descripcion = vectorEquipo[2];
-                // crea el objeto en memoria
-                equipo = new Equipo(idEquipo, nombre, descripcion);
-                
-                // llama al metodo add para grabar el equipo en la lista en memoria
-                this.addEquipo(equipo);
-                }
-            }
-            //closes the scanner
-            sc.close();
-        } catch (IOException ex) {
-                System.out.println("Mensaje: " + ex.getMessage());
-        }       
-        i++;
-    }
-
+                    // Try/Catch with resources
+                    try (resultSet) {
+                        while (resultSet.next()) {
+                            Equipo e = new Equipo(
+                            resultSet.getInt("idEquipo"),
+                            resultSet.getString("Nombre"),
+                            resultSet.getString("Descripcion")
+                            );  
+                            this.addEquipo(e);
+                            }
+                        }
+                     }
+                 }
+            } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    } 
 }

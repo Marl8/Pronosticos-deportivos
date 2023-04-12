@@ -1,11 +1,18 @@
 
 package tp;
 
-import java.io.File;
-import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
+
+/**
+ *
+ * @author Martin Lemberger
+ */
 
 public class ListaParticipantes {
     
@@ -18,7 +25,7 @@ public class ListaParticipantes {
     }
     
     public ListaParticipantes() {
-        this.participantes = new ArrayList<Participante>();
+        this.participantes = new ArrayList<>();
         this.participantesCSV = "participantes.csv";
     }
 
@@ -86,50 +93,86 @@ public class ListaParticipantes {
         return lista;
     }
     
-    // cargar desde el archivo
     public void cargarDeArchivo() {
-        // para las lineas del archivo csv
-        String datosParticipante;
-        // para los datos individuales de cada linea
-        String vectorParticipante[];
-        // para el objeto en memoria
-        Participante participante;
-        int fila = 0;
-       
-        try { 
-            Scanner sc = new Scanner(new File(this.getParticipantesCSV()));
-            sc.useDelimiter("\n");   //setea el separador de los datos
+        
+        Partido partido;
+        Equipo equipo1 = new Equipo();
+        Equipo equipo2 = new Equipo();
+        
+        try {
+            ConnectionFactory factory = new ConnectionFactory();
+            final Connection con = factory.conexion();
+            
+            // Try/Catch with resources
+            try (con) {
                 
-            while (sc.hasNext()) {
-                // levanta los datos de cada linea
-                datosParticipante = sc.next();
-                // Descomentar si se quiere mostrar cada línea leída desde el archivo
+                final PreparedStatement statement = con.prepareStatement
+            		("SELECT idParticipante, Nombre FROM participantes");
+                // Try/Catch with resources
+                try (statement) {
                 
-                // System.out.println(datosParticipante);  //muestra los datos levantados 
+                    statement.execute();
+    
+                final ResultSet resultSet = statement.getResultSet();
                 
-                fila ++;
-                // si es la cabecera la descarto y no se considera para armar el listado
-                if (fila == 1)
-                    continue;              
-                 
-                //Proceso auxiliar para convertir los string en vector
-                // guarda en un vector los elementos individuales
-                vectorParticipante = datosParticipante.split(",");   
-                
-                // graba el equipo en memoria
-                //convertir un string a un entero;
-                int idParticipante = Integer.parseInt(vectorParticipante[0]);
-                String nombre = vectorParticipante[1];
-                // crea el objeto en memoria
-                participante = new Participante(idParticipante, nombre);
-                
-                // llama al metodo add para grabar el equipo en la lista en memoria
-                this.addParticipante(participante);
-            }
-            //closes the scanner
-        } catch (IOException ex) {
-                System.out.println("Mensaje: " + ex.getMessage());
-        }       
-    }
+                    // Try/Catch with resources
+                    try (resultSet) {
+                        while (resultSet.next()) {
 
+                            Participante e = new Participante(
+                            resultSet.getInt("idParticipante"),
+                            resultSet.getString("Nombre"));
+                            
+                            this.addParticipante(e);
+                            }
+                        }
+                    }
+                }       
+            } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+      
+    public List<Participante> ordenarPorPuntajes () {
+
+            List<Participante> parti = new ArrayList<>();
+            parti.addAll(participantes);
+        
+            Collections.sort(parti, Collections.reverseOrder());
+            
+            return parti;
+    }
+    
+    public String listaOrdenados () {
+        
+        List<Participante> partiOrdenados = this.ordenarPorPuntajes();
+        
+        String lista = " ";
+        
+        for (Participante parti : partiOrdenados) {
+        
+           lista += """
+                    
+                    Nombre: """ + parti.getNombre() + " Puntaje: " + parti.getPuntaje() + "\n";
+        }
+        return lista;
+    }
+    
+    public void ganador () {
+
+        List<Participante> participante;
+        String lista = "";
+        
+        participante = ordenarPorPuntajes();
+        Participante ganador = participante.get(0);
+        
+        for (int i = 0; i < participante.size(); i++) {
+            
+            if (participante.get(i).getPuntaje() == ganador.getPuntaje()) {
+            
+                lista += "\n" + participante.get(i).getNombre();   
+            }
+        }
+        System.out.println("El/los ganador/es: \n" + lista);
+    }
 }

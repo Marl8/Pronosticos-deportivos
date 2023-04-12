@@ -1,14 +1,11 @@
 package tp;
 
-import java.util.Comparator;
-import java.util.List;
-
 /**
  *
  * @author Martin Lemberger
  */
 
-public class Participante {
+public class Participante implements Comparable<Participante>{
     private Integer idParticipante;
     private String nombre;
     private ListaPronosticos pronosticos;
@@ -82,35 +79,30 @@ public class Participante {
 
     @Override
     public String toString() {
-
-        return 
-                "Participante: " +
-                "nombre: " + nombre + "\n" +
-                "El id del Participante es: " + idParticipante + "\n" +
-                "Sus pronosticos son: " + pronosticos + "\n" +
-                "Su puntaje final es " + getPuntaje() + " puntos" + "\n" +
-                "La cantidad de aciertos es: " + getAciertos() + " aciertos" + "\n" +
-                "=======================================" + " \n";
-    }    
+        return "Participante{" + "idParticipante=" + idParticipante + ", nombre=" + nombre + ", pronosticos=" + pronosticos + '}';
+    }
+    
     
     void cargarPronosticos (ListaEquipos equipos, ListaPartidos partidos) {
         this.pronosticos.cargarDeArchivo(this.getIdParticipante(), equipos, partidos);
     }
-    
-    public List<Participante> ordenarPorPuntajes (List<Participante> participantes) {
 
-            participantes.sort(Comparator.comparing(Participante::getPuntaje).reversed());
+     @Override
+    public int compareTo(Participante parti) {
+        
+        int estePuntaje = this.getPuntaje();
+        int otroPuntaje = parti.getPuntaje();
+        
+        if (estePuntaje == otroPuntaje) {
             
-            return participantes;
-    }
-    
-    public Participante ganador (List<Participante> participantes) {
-    
-        this.ordenarPorPuntajes(participantes);
-        
-        Participante ganador = participantes.get(0);
-        
-        return ganador;
+            return 0;
+        } else if (estePuntaje > otroPuntaje) {
+            
+            return 1;
+        }else {
+            
+            return -1;
+        }
     }
 }
 

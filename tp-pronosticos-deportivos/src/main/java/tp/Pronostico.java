@@ -2,7 +2,7 @@
 package tp;
 
 /**
- *
+
  * @author Martin Lemberger
  */
 
@@ -14,15 +14,13 @@ public class Pronostico {
     private Partido partido;
     private char resultado;
 
-
-    public Pronostico(int idPronostico, int idParticipante, Equipo equipo, Partido partido, char resultado) {
+    public Pronostico(int idPronostico, Participante participante, Equipo equipo, Partido partido, char resultado) {
         this.idPronostico = idPronostico;
-        this.participante = (Participante) (Object) idParticipante;
+        this.participante = participante;
         this.equipo = equipo;
         this.partido = partido;
         this.resultado = resultado;
     }
-
 
     public Pronostico(int idPronostico, Equipo equipo, Partido partido, char resultado) {
         this.idPronostico = idPronostico;
@@ -80,11 +78,10 @@ public class Pronostico {
                 ", resultado=" + resultado + '}';
     }
 
-    
     public int puntos () {
      
         int puntos = 0;
-        
+
         if (this.partido.getResultado(this.equipo) == this.resultado) {       
             puntos = 1;
         }     

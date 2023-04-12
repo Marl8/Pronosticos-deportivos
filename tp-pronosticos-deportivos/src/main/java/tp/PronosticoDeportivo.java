@@ -1,14 +1,11 @@
-/*
-Para entrega 2
- */
+
 package tp;
 
 import java.util.List;
 
-
 /**
  *
- * @author Martin Lemberger
+ * @author Grupo 4
  */
 
 public class PronosticoDeportivo {
@@ -36,7 +33,7 @@ public class PronosticoDeportivo {
         
         System.out.println("================================================");
 
-       participantes.cargarDeArchivo();
+        participantes.cargarDeArchivo();
         // Una vez cargados los participantes, para cada uno de ellos
         // cargar sus pronósticos
         for (Participante p : participantes.getParticipantes()) {
@@ -45,7 +42,7 @@ public class PronosticoDeportivo {
         
         System.out.println("Los participantes cargados son: " + participantes.listar());
         
-        System.out.println("================================================");
+        System.out.println("================================================ \n");
         
     } 
     
@@ -69,27 +66,25 @@ public class PronosticoDeportivo {
    }
    
    public void mostarPuntajesOrdenados () {
-       
-       List<Participante> parti = participantes.getParticipantes();
-       
-       Participante participante = new Participante();
-       
-       String lista = participante.ordenarPorPuntajes(parti).toString();
-       
+   
        System.out.println("""
-                          Los Puntajes de los participantes ordenados de mayor a menor son: 
-                          
-                          """ + lista + "\n" + "-----------------------------"); 
+                          Los puntajes de los participantes ordenados de mayor a menor son: 
+                          ---------------------------------------------------------------- 
+                          """ + participantes.listaOrdenados());
+       
+       System.out.println("================================== \n");
    }
+  
    
     public void mostrarGanador () {
-   
-       List<Participante> parti = participantes.getParticipantes();
-       
-       Participante participante = new Participante();
   
-        System.out.println("¡¡GANADOR!! \n "); 
-        System.out.println("El ganador es: \n" 
-                + participante.ganador(parti));
+        System.out.println("¡¡GANADOR!! \n");
+        
+        participantes.ganador();
+        
+        System.out.println("""
+                           
+                           ================================== 
+                           """);
    }
 }
