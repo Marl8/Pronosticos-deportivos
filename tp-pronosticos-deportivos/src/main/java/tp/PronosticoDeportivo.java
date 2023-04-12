@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  *
- * @author Grupo 4
+ * @author Martin Lemberger
  */
 
 public class PronosticoDeportivo {

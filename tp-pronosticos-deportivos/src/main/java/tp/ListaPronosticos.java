@@ -86,7 +86,6 @@ public class ListaPronosticos {
                final PreparedStatement statement = con.prepareStatement
             		("SELECT idPronostico,idParticipante,idPartido,idEquipo,resultado"
                                 + " FROM pronosticos WHERE idParticipante = " + idParticipante);
-               
                 
                 // Try/Catch with resources
                 try (statement) {

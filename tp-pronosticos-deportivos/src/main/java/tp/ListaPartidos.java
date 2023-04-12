@@ -117,7 +117,6 @@ public class ListaPartidos {
                         while (resultSet.next()) {
 
                             equipo1 = listaEquipos.getEquipo(resultSet.getInt("idEquipo1"));
-                            System.out.println(equipo1);
 
                             equipo2 = listaEquipos.getEquipo(resultSet.getInt("idEquipo2"));
 
