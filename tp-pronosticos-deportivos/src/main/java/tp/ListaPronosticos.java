@@ -81,17 +81,14 @@ public class ListaPronosticos {
             final Connection con = factory.conexion();
             
             // Try/Catch with resources
-            try (con) {
-                
+            try (con) {       
                final PreparedStatement statement = con.prepareStatement
             		("SELECT idPronostico,idParticipante,idPartido,idEquipo,resultado"
                                 + " FROM pronosticos WHERE idParticipante = " + idParticipante);
                 
                 // Try/Catch with resources
-                try (statement) {
-                
-                    statement.execute();
-    
+                try (statement) {              
+                    statement.execute();    
                     final ResultSet resultSet = statement.getResultSet();
                 
                     // Try/Catch with resources
@@ -103,15 +100,12 @@ public class ListaPronosticos {
                           
                           equipo = new Equipo();
                           
-                          if(equip == 1) {
-                              
+                          if(equip == 1) {    
                             equipo = partido.getEquipo1();
-                          
-                          }else if (equip == 2) {
-                          
+                            
+                          }else if (equip == 2) {                          
                             equipo = partido.getEquipo2();
                           }
-
                             Pronostico e = new Pronostico(resultSet.getInt("idPronostico"), 
                                 equipo, partido, 
                         resultSet.getString("resultado").charAt(0));

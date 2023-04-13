@@ -38,8 +38,7 @@ public class PronosticoDeportivo {
         // cargar sus pronósticos
         for (Participante p : participantes.getParticipantes()) {
             p.cargarPronosticos(equipos, partidos);
-        }
-        
+        }     
         System.out.println("Los participantes cargados son: " + participantes.listar());
         
         System.out.println("================================================ \n");
@@ -53,8 +52,7 @@ public class PronosticoDeportivo {
        
        System.out.println("Puntajes Finales: \n");
         
-        for (Participante participante : parti) {
-        
+        for (Participante participante : parti) { 
             System.out.println("Participante: " + participante.getNombre() + "\n" 
                                 + "El puntaje para el participante es: " + participante.getPuntaje() + " puntos \n"
                                 + "La cantidad de aciertos para el participante es: " 

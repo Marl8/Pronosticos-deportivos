@@ -107,17 +107,13 @@ public class ListaPartidos {
                                 + " FROM partidos");
                 // Try/Catch with resources
                 try (statement) {
-                
                     statement.execute();
-    
-                final ResultSet resultSet = statement.getResultSet();
+                    final ResultSet resultSet = statement.getResultSet();
                 
                     // Try/Catch with resources
-                    try (resultSet) {
+                    try (resultSet) {                   
                         while (resultSet.next()) {
-
                             equipo1 = listaEquipos.getEquipo(resultSet.getInt("idEquipo1"));
-
                             equipo2 = listaEquipos.getEquipo(resultSet.getInt("idEquipo2"));
 
                             Partido e = new Partido(

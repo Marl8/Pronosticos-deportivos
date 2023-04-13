@@ -138,6 +138,7 @@ public class ListaParticipantes {
             List<Participante> parti = new ArrayList<>();
             parti.addAll(participantes);
         
+            //Ordenados de Mayor a menor
             Collections.sort(parti, Collections.reverseOrder());
             
             return parti;
@@ -147,7 +148,7 @@ public class ListaParticipantes {
         
         List<Participante> partiOrdenados = this.ordenarPorPuntajes();
         
-        String lista = " ";
+        String lista = "";
         
         for (Participante parti : partiOrdenados) {
         

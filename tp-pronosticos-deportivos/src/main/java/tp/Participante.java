@@ -70,7 +70,7 @@ public class Participante implements Comparable<Participante>{
     public int getAciertos() {
 
         int aciertos = 0;
-     
+        
         for (Pronostico p : this.getPronosticos().getPronosticos()) {
             aciertos += p.puntos();
         }
@@ -94,10 +94,9 @@ public class Participante implements Comparable<Participante>{
         int otroPuntaje = parti.getPuntaje();
         
         if (estePuntaje == otroPuntaje) {
-            
             return 0;
-        } else if (estePuntaje > otroPuntaje) {
-            
+        
+        } else if (estePuntaje > otroPuntaje) {    
             return 1;
         }else {
             

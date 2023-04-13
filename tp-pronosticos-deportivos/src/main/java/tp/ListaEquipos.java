@@ -97,8 +97,7 @@ public class ListaEquipos {
      
         try {
             ConnectionFactory factory = new ConnectionFactory();
-            final Connection con = factory.conexion();
-            
+            final Connection con = factory.conexion();         
             // Try/Catch with resources
             try (con) {
                 
@@ -107,8 +106,7 @@ public class ListaEquipos {
                 
                 // Try/Catch with resources
                 try (statement) {
-                statement.execute();
-    
+                statement.execute(); 
                 final ResultSet resultSet = statement.getResultSet();
                 
                     // Try/Catch with resources
