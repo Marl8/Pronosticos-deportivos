@@ -69,10 +69,8 @@ public class ListaPronosticos {
     public void cargarDeArchivo(
             int idParticipante, // id del participante que realizó el pronóstico
             ListaEquipos listaequipos, // lista de equipos
-            ListaPartidos listapartidos // lista de partidos
-            
+            ListaPartidos listapartidos // lista de partidos        
     ) {
-        
         Equipo equipo; 
         Partido partido; 
         
