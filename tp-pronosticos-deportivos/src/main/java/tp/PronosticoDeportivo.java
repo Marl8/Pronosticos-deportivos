@@ -52,7 +52,7 @@ public class PronosticoDeportivo {
        
        System.out.println("Puntajes Finales: \n");
         
-        for (Participante participante : parti) { 
+        for (Participante participante : parti2) { 
             System.out.println("Participante: " + participante.getNombre() + "\n" 
                                 + "El puntaje para el participante es: " + participante.getPuntaje() + " puntos \n"
                                 + "La cantidad de aciertos para el participante es: " 
