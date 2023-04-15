@@ -96,8 +96,6 @@ public class ListaParticipantes {
     public void cargarDeArchivo() {
         
         Partido partido;
-        Equipo equipo1 = new Equipo();
-        Equipo equipo2 = new Equipo();
         
         try {
             ConnectionFactory factory = new ConnectionFactory();
