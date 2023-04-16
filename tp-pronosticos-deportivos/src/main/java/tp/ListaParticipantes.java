@@ -95,8 +95,6 @@ public class ListaParticipantes {
     
     public void cargarDeArchivo() {
         
-        Partido partido;
-        
         try {
             ConnectionFactory factory = new ConnectionFactory();
             final Connection con = factory.conexion();
