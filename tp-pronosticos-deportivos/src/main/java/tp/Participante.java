@@ -84,7 +84,7 @@ public class Participante implements Comparable<Participante>{
     
     
     void cargarPronosticos (ListaEquipos equipos, ListaPartidos partidos) {
-        this.pronosticos.cargarDeArchivo(this.getIdParticipante(), equipos, partidos);
+        this.pronosticos.cargarDeDB(this.getIdParticipante(), equipos, partidos);
     }
 
      @Override

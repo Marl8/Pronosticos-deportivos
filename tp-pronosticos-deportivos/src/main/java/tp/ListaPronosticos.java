@@ -66,7 +66,7 @@ public class ListaPronosticos {
         return lista;
     }
 
-    public void cargarDeArchivo(
+    public void cargarDeDB(
             int idParticipante, // id del participante que realizó el pronóstico
             ListaEquipos listaequipos, // lista de equipos
             ListaPartidos listapartidos // lista de partidos        

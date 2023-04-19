@@ -89,7 +89,7 @@ public class ListaPartidos {
         return lista;
     }
      
-    public void cargarDeArchivo(ListaEquipos listaEquipos) {
+    public void cargarDeDB(ListaEquipos listaEquipos) {
      
         Partido partido;
         Equipo equipo1;

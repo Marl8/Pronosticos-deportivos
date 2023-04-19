@@ -93,7 +93,7 @@ public class ListaEquipos {
         return lista;
     }
     
-     public void cargarDeArchivo() {
+     public void cargarDeDB() {
      
         try {
             ConnectionFactory factory = new ConnectionFactory();
