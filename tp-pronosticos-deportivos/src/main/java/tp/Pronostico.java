@@ -30,7 +30,11 @@ public class Pronostico {
     }
 
     Pronostico(int idPronostico, int idParticipante, Equipo equipo, Partido partido, char resultado) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.idPronostico = idPronostico;
+        this.participante = (Participante) (Object) participante.getIdParticipante();
+        this.equipo = equipo;
+        this.partido = partido;
+        this.resultado = resultado;
     }
 
 
